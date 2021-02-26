@@ -82,7 +82,8 @@ class Bot:
         """
         Choosing chats of amino to monitor
         """
-        self.chats = self.client.sub_clients[self.selected_amino].chat_threads
+        self.chats = self.client.sub_clients[self.selected_amino].chat_threads.copy()
+        print(type(self.chats))
         c = 0
         for i in self.chats:
             if not i.title:
