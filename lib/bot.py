@@ -73,7 +73,8 @@ class Bot:
 
             c += 1
 
-        self.selected_amino = aminos[int(input("Выберите одно из амино: "))]
+        print("Выберите одно из амино: ")
+        self.selected_amino = aminos[int(1)]     # fixme: hack for autostart
 
         log(f"Вы выбрали {self.selected_amino}")
         print()
@@ -83,18 +84,20 @@ class Bot:
         Choosing chats of amino to monitor
         """
         self.chats = self.client.sub_clients[self.selected_amino].chat_threads.copy()
-        print(type(self.chats))
-        c = 0
-        for i in self.chats:
-            if not i.title:
+        self.selected_chats = []
+
+        for i, chat in enumerate(self.chats):
+            if not chat.title:
                 continue
 
-            print(str(c) + '. ' + i.title)
-            c += 1
+            print(str(i) + '. ' + chat.title)
+            self.selected_chats.append(self.chats[int(i)]) # Hack: выбраны все чаты
 
-        selected_chats = input("Окей, теперь выбери чаты через запятую (например 0,2,3): ").split(',')
-        self.selected_chats = []
-        for i in selected_chats:
-            self.selected_chats.append(self.chats[int(i)])
+        print("Hack: selected ALL chats :)")
 
-            log("Начинаю мониторить чат " + self.chats[int(i)].title)
+        # selected_chats = input("Окей, теперь выбери чаты через запятую (например 0,2,3): ").split(',')
+        #
+        # for i in selected_chats:
+        #     self.selected_chats.append(self.chats[int(i)])
+        #
+        #     log("Начинаю мониторить чат " + self.chats[int(i)].title)
